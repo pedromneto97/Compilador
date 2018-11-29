@@ -51,6 +51,10 @@ public class T {
         this.nome = nome;
     }
 
+    public int getKind() {
+        return this.categoria;
+    }
+
     @Override
     public String toString() {
         return "\n\t\tNome: " + this.nome + "\n\t\tCategoria: " + this.categoria + "\n\t\tTipo: " + this.tipo + "\n\t\tAddress: " + this.address + "\n\t";
