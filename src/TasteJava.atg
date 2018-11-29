@@ -1,0 +1,249 @@
+package compiler.taste.semantic.implst;
+
+import compiler.taste.semantic.*;
+
+import compiler.taste.semantic.stable.*;
+
+COMPILER Taste
+
+SeuTOBJ tab = ....
+
+SeuTConst sConst = ....
+
+public void printTable() {
+
+System.out.println("**** Conteúdo da tabela de simbolos ****");
+
+System.out.println(tab.toString());
+
+}
+
+/*--------------------------------------------------------------------------*/
+
+CHARACTERS
+
+letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".
+
+digit = "0123456789".
+
+cr = '\u000d'.
+
+lf = '\u000a'.
+
+tab = '\u0009'.
+
+TOKENS
+
+ident = letter {letter | digit}.
+
+number = digit {digit}.
+
+COMMENTS FROM "/*" TO "*/" NESTED
+
+IGNORE cr + lf + tab
+
+PRODUCTIONS
+
+/*------------------------------------------------------------------------*/
+
+/*Ident <out String name> = ident (. name = t.val; .) .*/
+
+Ident<out String xname> = ident (. xname = t.val;.).
+
+/*------------------------------------------------------------------------*/
+
+AddOp<out int aop> = (. aop = -1; .)
+
+( "+" (. aop = sConst.OPPLUS; .)
+
+| "-" (. aop = sConst.OPMINUS; .)
+
+).
+
+/*------------------------------------------------------------------------*/
+
+Expr<out int etype> (. int type1, rop; .) =
+
+SimExpr<out etype> [ RelOp<out rop> SimExpr<out type1> ].
+
+/*------------------------------------------------------------------------*/
+
+Factor<out int ftype> (. int val, n;
+
+StObj obj;
+
+String xname;
+
+int ftype1;
+
+ftype = stConst.TUNDEF;
+
+.) =
+
+( Ident<out xname> (. obj = tab.find(xname); ftype = obj.getType();
+
+if (obj.getKind() == stConst.CVAR) {
+
+System.out.println("Processando um fator que tem uma variavel");
+
+System.out.println("cujo nome eh" + xname);
+
+} else System.out.println("Esperava uma variavel");
+
+.)
+
+| number
+
+| "-" Factor<out ftype1> (. if (ftype1 != stConst.TINTEGER) {
+
+System.out.println("esperava um inteiro");
+
+System.out.println("depois tratar erro");
+
+}
+
+.)
+
+| "true"
+
+| "false"
+
+).
+
+/*------------------------------------------------------------------------*/
+
+MulOp <out int mop> = (. mop = -1; .)
+
+( "*" (. mop = sConst.OPTIMES; .) | "/" (. mop =sConst.OPSLASH; .) ).
+
+/*------------------------------------------------------------------------*/
+
+ProcDecl (. String xname; StObj obj; .)
+
+= "void"
+
+Ident<out xname> (. obj = tab.insert(xname, stConst.CPROC, stConst.TUNDEF);
+
+tab.openScope(); System.out.println("Apos criar escopo"); printTable();
+
+.)
+
+"(" ")" "{" { VarDecl | Stat } "}" (. tab.closeScope(); .).
+
+/*------------------------------------------------------------------------*/
+
+RelOp<out int rop> = (. rop = -1; .)
+
+( "==" (. rop = sConst.OPEQU; .)
+
+| "<" (. rop = sConst.OPLSS; .)
+
+| ">" (. rop = sConst.OPGTR; .)
+
+).
+
+/*------------------------------------------------------------------------*/
+
+SimExpr<out int stype> (. int stype1, aop; .)=
+
+Term<out stype> {
+
+AddOp<out aop> Term<out stype1> (. if (stype != stConst.TINTEGER || stype1 != stConst.TINTEGER) System.out.println("Expressão simples requer operandos do tipo inteiro"); .)
+
+}.
+
+/*------------------------------------------------------------------------*/
+
+Stat (. int etype;
+
+String xname;
+
+StObj obj;
+
+.) =
+
+Ident<out xname> (. obj = tab.find(xname); .)
+
+("=" (. if (obj.getKind() != StTypes.CVAR) System.out.println("Atribui valores somente a variaveis"); .)
+
+Expr<out etype> ";" (. if (etype != obj.getType()) System.out.println("Tipos incompativeis"); .)
+
+|
+
+"(" ")" ";" (. if (obj.getKind()!= stConst.CPROC) System.out.println("Obj nao é um procedimento"); .)
+
+)
+
+| "if" "(" Expr<out etype> ")" (. if (etype != stConst.TBOOLEAN) System.out.println("Precisa ser booleano"); .)
+
+| "while" "(" Expr<out etype> ")" (. if (etype != stConst.TBOOLEAN) System.out.println("Precisa ser booleano"); .)
+
+Stat
+
+| "read" Ident<out xname> ";" (. obj = tab.find(xname); .)
+
+| "write" Expr<out etype> ";" (. if (etype != stConst.TINTEGER) System.out.println("Precisa ser do tipo inteiro"); .)
+
+| "{" { Stat | VarDecl } "}" .
+
+/*------------------------------------------------------------------------*/
+
+Taste (. String xname; .)
+
+= "program"
+
+Ident<out xname> (. tab.openScope(); .)
+
+"{"
+
+{ VarDecl }
+
+{ ProcDecl }
+
+"}" (. tab.closeScope(); .).
+
+/*------------------------------------------------------------------------*/
+
+Term<out int ttype> (. int ttype1, mop; .)
+
+= Factor<out ttype>
+
+{ MulOp<out mop>
+
+Factor<out ttype1> (. if (ttype != stConst.TINTEGER || ttype1 != stConst.TINTEGER)
+
+System.out.println("integer type expected");
+
+.)
+
+}.
+
+/*------------------------------------------------------------------------*/
+
+Type<out int type>
+
+= (. type = stConst.TUNDEF; .)
+
+(
+
+"int" (. type = stConst.TINTEGER; .)
+
+|
+
+"bool" (. type = stConst.TBOOLEAN; .)
+
+).
+
+/*------------------------------------------------------------------------*/
+
+VarDecl (. String xname; int ttype; .)
+
+= Type<out ttype>
+
+Ident<out xname> (. tab.insert(xname, stConst.CVAR, ttype); .)
+
+{ "," Ident<out xname> (. tab.insert(xname, stConst.CVAR, ttype); .)
+
+} ";" (. System.out.println("Declaracao de Variaveis efetuada\n"); printTable().).
+
+END Taste.
