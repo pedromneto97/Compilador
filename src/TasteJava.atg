@@ -6,9 +6,7 @@ import compiler.taste.semantic.stable.*;
 
 COMPILER Taste
 
-SeuTOBJ tab = ....
-
-SeuTConst sConst = ....
+TS tab = new TS();
 
 public void printTable() {
 
@@ -54,9 +52,9 @@ Ident<out String xname> = ident (. xname = t.val;.).
 
 AddOp<out int aop> = (. aop = -1; .)
 
-( "+" (. aop = sConst.OPPLUS; .)
+( "+" (. aop = Constantes.OPPLUS; .)
 
-| "-" (. aop = sConst.OPMINUS; .)
+| "-" (. aop = Constantes.OPMINUS; .)
 
 ).
 
@@ -70,19 +68,19 @@ SimExpr<out etype> [ RelOp<out rop> SimExpr<out type1> ].
 
 Factor<out int ftype> (. int val, n;
 
-StObj obj;
+T obj;
 
 String xname;
 
 int ftype1;
 
-ftype = stConst.TUNDEF;
+ftype = Constantes.TUNDEF;
 
 .) =
 
 ( Ident<out xname> (. obj = tab.find(xname); ftype = obj.getType();
 
-if (obj.getKind() == stConst.CVAR) {
+if (obj.getKind() == Constantes.CVAR) {
 
 System.out.println("Processando um fator que tem uma variavel");
 
@@ -94,7 +92,7 @@ System.out.println("cujo nome eh" + xname);
 
 | number
 
-| "-" Factor<out ftype1> (. if (ftype1 != stConst.TINTEGER) {
+| "-" Factor<out ftype1> (. if (ftype1 != Constantes.TINTEGER) {
 
 System.out.println("esperava um inteiro");
 
@@ -114,15 +112,15 @@ System.out.println("depois tratar erro");
 
 MulOp <out int mop> = (. mop = -1; .)
 
-( "*" (. mop = sConst.OPTIMES; .) | "/" (. mop =sConst.OPSLASH; .) ).
+( "*" (. mop = Constantes.OPTIMES; .) | "/" (. mop =Constantes.OPSLASH; .) ).
 
 /*------------------------------------------------------------------------*/
 
-ProcDecl (. String xname; StObj obj; .)
+ProcDecl (. String xname; T obj; .)
 
 = "void"
 
-Ident<out xname> (. obj = tab.insert(xname, stConst.CPROC, stConst.TUNDEF);
+Ident<out xname> (. obj = tab.insert(xname, Constantes.CPROC, Constantes.TUNDEF);
 
 tab.openScope(); System.out.println("Apos criar escopo"); printTable();
 
@@ -134,11 +132,11 @@ tab.openScope(); System.out.println("Apos criar escopo"); printTable();
 
 RelOp<out int rop> = (. rop = -1; .)
 
-( "==" (. rop = sConst.OPEQU; .)
+( "==" (. rop = Constantes.OPEQU; .)
 
-| "<" (. rop = sConst.OPLSS; .)
+| "<" (. rop = Constantes.OPLSS; .)
 
-| ">" (. rop = sConst.OPGTR; .)
+| ">" (. rop = Constantes.OPGTR; .)
 
 ).
 
@@ -148,7 +146,7 @@ SimExpr<out int stype> (. int stype1, aop; .)=
 
 Term<out stype> {
 
-AddOp<out aop> Term<out stype1> (. if (stype != stConst.TINTEGER || stype1 != stConst.TINTEGER) System.out.println("Expressão simples requer operandos do tipo inteiro"); .)
+AddOp<out aop> Term<out stype1> (. if (stype != Constantes.TINTEGER || stype1 != Constantes.TINTEGER) System.out.println("Expressão simples requer operandos do tipo inteiro"); .)
 
 }.
 
@@ -158,7 +156,7 @@ Stat (. int etype;
 
 String xname;
 
-StObj obj;
+T obj;
 
 .) =
 
@@ -170,19 +168,19 @@ Expr<out etype> ";" (. if (etype != obj.getType()) System.out.println("Tipos inc
 
 |
 
-"(" ")" ";" (. if (obj.getKind()!= stConst.CPROC) System.out.println("Obj nao é um procedimento"); .)
+"(" ")" ";" (. if (obj.getKind()!= Constantes.CPROC) System.out.println("Obj nao é um procedimento"); .)
 
 )
 
-| "if" "(" Expr<out etype> ")" (. if (etype != stConst.TBOOLEAN) System.out.println("Precisa ser booleano"); .)
+| "if" "(" Expr<out etype> ")" (. if (etype != Constantes.TBOOLEAN) System.out.println("Precisa ser booleano"); .)
 
-| "while" "(" Expr<out etype> ")" (. if (etype != stConst.TBOOLEAN) System.out.println("Precisa ser booleano"); .)
+| "while" "(" Expr<out etype> ")" (. if (etype != Constantes.TBOOLEAN) System.out.println("Precisa ser booleano"); .)
 
 Stat
 
 | "read" Ident<out xname> ";" (. obj = tab.find(xname); .)
 
-| "write" Expr<out etype> ";" (. if (etype != stConst.TINTEGER) System.out.println("Precisa ser do tipo inteiro"); .)
+| "write" Expr<out etype> ";" (. if (etype != Constantes.TINTEGER) System.out.println("Precisa ser do tipo inteiro"); .)
 
 | "{" { Stat | VarDecl } "}" .
 
@@ -210,7 +208,7 @@ Term<out int ttype> (. int ttype1, mop; .)
 
 { MulOp<out mop>
 
-Factor<out ttype1> (. if (ttype != stConst.TINTEGER || ttype1 != stConst.TINTEGER)
+Factor<out ttype1> (. if (ttype != Constantes.TINTEGER || ttype1 != Constantes.TINTEGER)
 
 System.out.println("integer type expected");
 
@@ -222,15 +220,15 @@ System.out.println("integer type expected");
 
 Type<out int type>
 
-= (. type = stConst.TUNDEF; .)
+= (. type = Constantes.TUNDEF; .)
 
 (
 
-"int" (. type = stConst.TINTEGER; .)
+"int" (. type = Constantes.TINTEGER; .)
 
 |
 
-"bool" (. type = stConst.TBOOLEAN; .)
+"bool" (. type = Constantes.TBOOLEAN; .)
 
 ).
 
@@ -240,9 +238,9 @@ VarDecl (. String xname; int ttype; .)
 
 = Type<out ttype>
 
-Ident<out xname> (. tab.insert(xname, stConst.CVAR, ttype); .)
+Ident<out xname> (. tab.insert(xname, Constantes.CVAR, ttype); .)
 
-{ "," Ident<out xname> (. tab.insert(xname, stConst.CVAR, ttype); .)
+{ "," Ident<out xname> (. tab.insert(xname, Constantes.CVAR, ttype); .)
 
 } ";" (. System.out.println("Declaracao de Variaveis efetuada\n"); printTable().).
 
