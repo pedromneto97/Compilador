@@ -53,7 +53,7 @@ public class TS {
      */
     public T insert(String nome, int categoria, int tipo) {
         T novo = new T(nome, categoria, tipo);
-        if (tipo == Constantes.CVAR) {
+        if (categoria == Constantes.CVAR) {
             novo.setAddress(this.atual.getNvars());
             this.atual.setNvars(this.atual.getNvars() + 1);
         }
