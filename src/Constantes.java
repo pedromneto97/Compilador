@@ -1,6 +1,6 @@
 public class Constantes {
 
-    //Constantes
+    //Categoria
     public static final int CVAR = 8;
     public static final int CPROC = 9;
 
