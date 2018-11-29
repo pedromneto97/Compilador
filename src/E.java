@@ -63,6 +63,6 @@ public class E {
 
     @Override
     public String toString() {
-        return "Locals existentes: " + this.locals.toString() + "\nExterno: " + this.externo.toString() + "\nNúmero de variáveis: " + this.nvars;
+        return "\tLocals existentes: \n\t" + this.locals + "\n\tNúmero de variáveis: " + this.nvars + "\n\tExterno: " + this.externo;
     }
 }

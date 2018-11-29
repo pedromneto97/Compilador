@@ -82,6 +82,6 @@ public class TS {
 
     @Override
     public String toString() {
-        return "Escopo atual: " + this.atual.toString() + "\nNível: " + this.nivel;
+        return "Escopo atual:\n" + this.atual + "\nNível: " + this.nivel;
     }
 }

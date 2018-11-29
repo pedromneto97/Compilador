@@ -53,6 +53,6 @@ public class T {
 
     @Override
     public String toString() {
-        return "Nome: " + this.nome + "\nCategoria: " + this.categoria + "\nTipo: " + this.tipo + "\nAddress: " + this.address;
+        return "\n\t\tNome: " + this.nome + "\n\t\tCategoria: " + this.categoria + "\n\t\tTipo: " + this.tipo + "\n\t\tAddress: " + this.address + "\n\t";
     }
 }
