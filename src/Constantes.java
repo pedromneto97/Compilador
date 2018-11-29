@@ -1,18 +1,20 @@
-public enum Constantes {
+public class Constantes {
+
     //Constantes
-    CVAR(8), CPROC(9),
-    //Tipos
-    TUNDEF(0), TINTEGER(1), TBOOLEAN(2),
+    public static final int CVAR = 8;
+    public static final int CPROC = 9;
+
+    //Tipo
+    public static final int TUNDEF = 0;
+    public static final int TINTEGER = 1;
+    public static final int TBOOLEAN = 2;
+
     //Operações
-    OPPLUS(100), OPMINUS(101), OPTIMES(102), OPSLASH(103), OPEQU(104), OPLSS(105), OPGTR(106);
-
-    private int valor;
-
-    Constantes(int valor) {
-        this.valor = valor;
-    }
-
-    public int getValor() {
-        return this.valor;
-    }
+    public static final int OPPLUS = 100;
+    public static final int OPMINUS = 101;
+    public static final int OPTIMES = 102;
+    public static final int OPSLASH = 103;
+    public static final int OPEQU = 104;
+    public static final int OPLSS = 105;
+    public static final int OPGTR = 106;
 }

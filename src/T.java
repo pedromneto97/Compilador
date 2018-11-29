@@ -16,7 +16,7 @@ public class T {
     }
 
     public void setCategoria(int categoria) {
-        if (categoria == Constantes.CVAR.getValor() || categoria == Constantes.CPROC.getValor()) {
+        if (categoria == Constantes.CVAR || categoria == Constantes.CPROC) {
             this.categoria = categoria;
         } else {
             throw new IllegalArgumentException("Valor de categoria inválido");
@@ -28,7 +28,7 @@ public class T {
     }
 
     public void setTipo(int tipo) {
-        if (tipo == Constantes.TUNDEF.getValor() || tipo == Constantes.TINTEGER.getValor() || tipo == Constantes.TBOOLEAN.getValor()) {
+        if (tipo == Constantes.TUNDEF || tipo == Constantes.TINTEGER || tipo == Constantes.TBOOLEAN) {
             this.tipo = tipo;
         } else {
             throw new IllegalArgumentException("Valor do tipo inválido");
