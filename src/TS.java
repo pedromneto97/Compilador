@@ -36,7 +36,7 @@ public class TS {
     /**
      * Remove o escopo atual, passando a ser o externo
      */
-    public void closedScope() {
+    public void closeScope() {
         this.atual = this.atual.getExterno();
         this.nivel--;
     }
