@@ -82,7 +82,7 @@ Lessexpr<out int n> (.int n;.) = Expr<out n1> "<" Expr<out n2> (.if(n1<n2){n=1;}
 
 Gtrexpr<out int n> (.int n;.) = Expr<out n1> ">" Expr<out n2> (.if(n1>n2){n=1;}else{n=0;}.).
 
-Eqrexpr<out int n> = Expr "==" Expr.
+Eqrexpr<out int n> (.int n;.) = Expr<out n1> "==" Expr<out n2> (.if(n1==n2){n=1;}else{n=0;}.).
 
 Lexpr = ".(" Lcond ").".
 
