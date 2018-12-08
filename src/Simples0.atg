@@ -57,6 +57,8 @@ Sinput = "INPUT" varid.
 
 Satr = varid ":=" string.
 
+Atr = varid ":=" integer.
+
 Sdecl = "VAR" (.int type;.)
 ( "int" (.type = Constantes.TINTEGER;.) | "string" (.type = Constantes.TSTRING;.))
 varid<out name> (.tab.insert(name, Constantes.CVAR, type);.).
