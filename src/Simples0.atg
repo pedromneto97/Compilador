@@ -70,11 +70,11 @@ expr = integer | varid | sumexpr | subexpr | mulexpr | divexpr | lessexpr | gtre
 
 sumexpr<int n> (.int n;.) = expr<out n1> "+" expr<out n2> (.n = n1+n2;.).
 
-subexpr<int n> (.int n;.) = expr<out n1> "-" expr<out n2> (.n=n1-n2.).
+subexpr<int n> (.int n;.) = expr<out n1> "-" expr<out n2> (.n=n1-n2;.).
 
-mulexpr<int n> (.int n;.) = expr<out n1> "*" expr<out n2> (.n=n1-n2.).
+mulexpr<int n> (.int n;.) = expr<out n1> "*" expr<out n2> (.n=n1*n2;.).
 
-divexpr<int n> (.int n;.) = expr<out n1> "DIV" expr<out n2> (.n=n1/n2.).
+divexpr<int n> (.int n;.) = expr<out n1> "DIV" expr<out n2> (.n=n1/n2;.).
 
 relexpr = lessexpr | gtrexpr | eqexpr.
 
