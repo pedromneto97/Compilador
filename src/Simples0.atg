@@ -28,8 +28,6 @@ tab = '\t'.
 
 TOKENS
 
-while = "while".
-
 varid = letter {letter | digit}.
 
 integer = digit_without_zero {digit}.
