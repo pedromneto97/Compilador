@@ -1,0 +1,89 @@
+COMPILER Simples0
+
+TS tab = new TS();
+
+public void printTable() {
+
+System.out.println("**** Conteúdo da tabela de simbolos ****");
+
+System.out.println(tab.toString());
+
+}
+
+/*--------------------------------------------------------------------------*/
+
+CHARACTERS
+
+letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".
+
+digit = "0123456789".
+
+digit_without_zero = "123456789".
+
+cr = '\r'.
+
+lf = '\n'.
+
+tab = '\t'.
+
+TOKENS
+
+while = "while".
+
+varid = letter {letter | digit}.
+
+integer = digit_without_zero {digit}.
+
+string = "'" anyButApostrophe '"' .
+
+COMMENTS FROM "/*" TO "*/" NESTED
+
+IGNORE cr + lf + tab
+
+PRODUCTIONS
+/*------------------------------------------------------------------------*/
+
+Simples0 (.String nome;.)= "PROGRAM" clist (.tab.openScope();.) "END" (.tab.closeScope();.).
+
+Clist = stmt {stmt}.
+
+Stmt = (sdecl | ssprint | seprint | satr | sinput | atr | swhile | scond) ";".
+
+Ssprint = "PRINT" string.
+
+Seprint = "PRINT" expr.
+
+sinput = "INPUT" <varid>.
+
+satr = varid ":=" string.
+
+sdecl = "VAR" ( integer | string ) varid.
+
+swhile = "WHILE" '(' lexpr "," stmt ")".
+
+scond = "IF" '(' lexpr "," stmt ')'.
+
+expr = integer | varid | sumexpr | subexpr | mulexpr | divexpr | lessexpr | gtrexpr | "(" expr ")".
+
+
+sumexpr<int n> (.int n;.) = expr<out n1> "+" expr<out n2> (.n = n1+n2;.).
+
+subexpr<int n> (.int n;.) = expr<out n1> "-" expr<out n2> (.n=n1-n2.).
+
+mulexpr<int n> (.int n;.) = expr<out n1> "*" expr<out n2> (.n=n1-n2.).
+
+divexpr<int n> (.int n;.) = expr<out n1> "DIV" expr<out n2> (.n=n1/n2.).
+
+relexpr = lessexpr | gtrexpr | eqexpr.
+
+lessexpr<int n> (.int n;.) = expr<out n1> "<" expr<out n2>.
+
+gtrexpr = expr ">" expr.
+
+eqrexpr = expr "==" expr.
+
+lexpr = ".(" lcond ").".
+
+lcond = "NOT (" relexpr ")" | relexpr ("AND"|"OR") relexpr | "TRUE" | "FALSE" | relxexpr.
+
+END Simples0.
