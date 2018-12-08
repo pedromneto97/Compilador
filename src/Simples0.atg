@@ -57,7 +57,9 @@ sinput = "INPUT" <varid>.
 
 satr = varid ":=" string.
 
-sdecl = "VAR" ( integer | string ) varid.
+sdecl = "VAR" (.int type;.)
+( "int" (.type = Constantes.TINTEGER;.) | "string" (.type = Constantes.TSTRING;.))
+varid<out name> (.tab.insert(name, Constantes.CVAR, type);.).
 
 swhile = "WHILE" '(' lexpr "," stmt ")".
 
