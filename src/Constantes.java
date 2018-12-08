@@ -8,6 +8,8 @@ public class Constantes {
     public static final int TUNDEF = 0;
     public static final int TINTEGER = 1;
     public static final int TBOOLEAN = 2;
+    //Tipo string para o Simples0
+    public static final int TSTRING = 3;
 
     //Operações
     public static final int OPPLUS = 100;
