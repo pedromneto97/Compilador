@@ -53,7 +53,7 @@ Ssprint(.String x;.) = "PRINT" string (.System.out.println(x);.).
 
 Seprint = "PRINT" expr.
 
-sinput = "INPUT" <varid>.
+sinput = "INPUT" varid.
 
 satr = varid ":=" string.
 
