@@ -78,7 +78,7 @@ Divexpr<out int n> (.int n;.) = Expr<out n1> "DIV" Expr<out n2> (.n=n1/n2;.).
 
 Relexpr = Lessexpr | Gtrexpr | Eqexpr.
 
-Lessexpr<out int n> (.int n;.) = Expr<out n1> "<" Expr<out n2>.
+Lessexpr<out int n> (.int n;.) = Expr<out n1> "<" Expr<out n2> (.if(n1<n2){n=1;}else{n=0;}.).
 
 Gtrexpr<out int n> = Expr ">" Expr.
 
