@@ -49,7 +49,7 @@ Clist = stmt {stmt}.
 
 Stmt = (sdecl | ssprint | seprint | satr | sinput | atr | swhile | scond) ";".
 
-Ssprint = "PRINT" string.
+Ssprint(.String x;.) = "PRINT" string (.System.out.println(x);.).
 
 Seprint = "PRINT" expr.
 
