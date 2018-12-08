@@ -45,47 +45,47 @@ PRODUCTIONS
 
 Simples0 (.String nome;.)= "PROGRAM" clist (.tab.openScope();.) "END" (.tab.closeScope();.).
 
-Clist = stmt {stmt}.
+Clist = Stmt {Stmt}.
 
-Stmt = (sdecl | ssprint | seprint | satr | sinput | atr | swhile | scond) ";".
+Stmt = (Sdecl | Ssprint | Seprint | Satr | Sinput | Atr | Swhile | Scond) ";".
 
 Ssprint(.String x;.) = "PRINT" string (.System.out.println(x);.).
 
-Seprint = "PRINT" expr.
+Seprint = "PRINT" Expr.
 
-sinput = "INPUT" varid.
+Sinput = "INPUT" varid.
 
-satr = varid ":=" string.
+Satr = varid ":=" string.
 
-sdecl = "VAR" (.int type;.)
+Sdecl = "VAR" (.int type;.)
 ( "int" (.type = Constantes.TINTEGER;.) | "string" (.type = Constantes.TSTRING;.))
 varid<out name> (.tab.insert(name, Constantes.CVAR, type);.).
 
-swhile = "WHILE" '(' lexpr "," stmt ")".
+Swhile = "WHILE" '(' Lexpr "," Stmt ")".
 
-scond = "IF" '(' lexpr "," stmt ')'.
+Scond = "IF" '(' Lexpr "," Stmt ')'.
 
-expr = integer | varid | sumexpr | subexpr | mulexpr | divexpr | lessexpr | gtrexpr | "(" expr ")".
+Expr<out int n> = integer | varid | Sumexpr | Subexpr | Mulexpr | Divexpr | Lessexpr | Gtrexpr | "(" Expr ")".
 
 
-sumexpr<int n> (.int n;.) = expr<out n1> "+" expr<out n2> (.n = n1+n2;.).
+Sumexpr<out int n> (.int n;.) = Expr<out n1> "+" Expr<out n2> (.n = n1+n2;.).
 
-subexpr<int n> (.int n;.) = expr<out n1> "-" expr<out n2> (.n=n1-n2;.).
+Subexpr<out int n> (.int n;.) = Expr<out n1> "-" Expr<out n2> (.n=n1-n2;.).
 
-mulexpr<int n> (.int n;.) = expr<out n1> "*" expr<out n2> (.n=n1*n2;.).
+Mulexpr<out int n> (.int n;.) = Expr<out n1> "*" Expr<out n2> (.n=n1*n2;.).
 
-divexpr<int n> (.int n;.) = expr<out n1> "DIV" expr<out n2> (.n=n1/n2;.).
+Divexpr<out int n> (.int n;.) = Expr<out n1> "DIV" Expr<out n2> (.n=n1/n2;.).
 
-relexpr = lessexpr | gtrexpr | eqexpr.
+Relexpr = Lessexpr | Gtrexpr | Eqexpr.
 
-lessexpr<int n> (.int n;.) = expr<out n1> "<" expr<out n2>.
+Lessexpr<out int n> (.int n;.) = Expr<out n1> "<" Expr<out n2>.
 
-gtrexpr = expr ">" expr.
+Gtrexpr<out int n> = Expr ">" Expr.
 
-eqrexpr = expr "==" expr.
+Eqrexpr<out int n> = Expr "==" Expr.
 
-lexpr = ".(" lcond ").".
+Lexpr = ".(" Lcond ").".
 
-lcond = "NOT (" relexpr ")" | relexpr ("AND"|"OR") relexpr | "TRUE" | "FALSE" | relxexpr.
+Lcond = "NOT (" Relexpr ")" | Relexpr ("AND"|"OR") Relexpr | "TRUE" | "FALSE" | Relxexpr.
 
 END Simples0.
