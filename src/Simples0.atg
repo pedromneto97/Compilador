@@ -76,7 +76,7 @@ Mulexpr<out int n> (.int n;.) = Expr<out n1> "*" Expr<out n2> (.n=n1*n2;.).
 
 Divexpr<out int n> (.int n;.) = Expr<out n1> "DIV" Expr<out n2> (.n=n1/n2;.).
 
-Relexpr = Lessexpr | Gtrexpr | Eqexpr.
+Relexpr<out int n> (.int n;.)= Lessexpr<out n1> (.n=n1;.) | Gtrexpr<out n2> (.n=n2;.) | Eqexpr<out n3> (.n=n3;.).
 
 Lessexpr<out int n> (.int n;.) = Expr<out n1> "<" Expr<out n2> (.if(n1<n2){n=1;}else{n=0;}.).
 
