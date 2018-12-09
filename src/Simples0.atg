@@ -84,7 +84,7 @@ Gtrexpr<out int n> (.int n;.) = Expr<out n1> ">" Expr<out n2> (.if(n1>n2){n=1;}e
 
 Eqrexpr<out int n> (.int n;.) = Expr<out n1> "==" Expr<out n2> (.if(n1==n2){n=1;}else{n=0;}.).
 
-Lexpr = ".(" Lcond ").".
+Lexpr<out int n> = ".(" Lcond<out n1> (.n=n1;.) ").".
 
 Lcond<out int n> (.int n;.)= "NOT (" Relexpr<out n1> ")" (.if(n1==0){n=1;}else{n=0;}.) | Relexpr<out n2> ("AND" (.if(n2 ==1 && n3 == 1){n=1;}else{n=0;}.)|"OR" (.if(n2 ==1 || n3 == 1){n=1;}else{n=0;}.)) Relexpr<out n3> | "TRUE" (.n=1;.) | "FALSE" (.n=0;.) | Relxexpr<out n4> (.n=n4;.).
 
