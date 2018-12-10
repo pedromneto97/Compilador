@@ -55,7 +55,7 @@ Sinput = "INPUT" varid.
 
 Satr = varid ":=" string.
 
-Atr = varid ":=" integer.
+Atr = varid ":=" Expr.
 
 Sdecl = "VAR" (.int type;.)
 ( "int" (.type = Constantes.TINTEGER;.) | "string" (.type = Constantes.TSTRING;.))
