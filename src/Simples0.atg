@@ -55,17 +55,17 @@ Sinput = "INPUT" varid.
 
 Satr = varid ":=" string.
 
-Atr = varid ":=" Expr.
+Atr = varid ":=" Expr<out n1>.
 
 Sdecl = "VAR" (.int type;.)
 ( "int" (.type = Constantes.TINTEGER;.) | "string" (.type = Constantes.TSTRING;.))
 varid<out name> (.tab.insert(name, Constantes.CVAR, type);.).
 
-Swhile = "WHILE" '(' Lexpr "," Stmt ")".
+Swhile = "WHILE" '(' Lexpr<out n1> "," Stmt ")".
 
-Scond = "IF" '(' Lexpr "," Stmt ')'.
+Scond = "IF" '(' Lexpr<out n1> "," Stmt ')'.
 
-Expr<out int n> (.int n;.)= integer | varid | Sumexpr | Subexpr | Mulexpr | Divexpr | Lessexpr | Gtrexpr | "(" Expr ")".
+Expr<out int n> (.int n;.)= integer | varid | Sumexpr<out n1> (.n=n1;.) | Subexpr<out n2> (.n=n2;.) | Mulexpr<out n3> (.n=n3;.) | Divexpr<out n4> (.n=n4;.) | Lessexpr<out n5> (.n=n5;.) | Gtrexpr<out n6> (.n=n6;.) | "(" Expr<out n7> (.n=n7;.) ")".
 
 
 Sumexpr<out int n> (.int n;.) = Expr<out n1> "+" Expr<out n2> (.n = n1+n2;.).
